@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Young+Serif&display=swap');
+
+
+body{
+    background: linear-gradient(0deg, rgba(120,41,15,1) 0%, rgba(255,236,209,1) 100%) no-repeat;
+    font-family: "Young Serif", serif;
+    text-align: center;
+    font-size: 44px;
+    font-weight: bolder;
+    color:rgb(21, 97, 109);
+    height: 100vh;
+    margin: 0;
+    padding: 120px;
+}
+
+
+.options{
+    font-size: 44px;
+    font-weight: bolder;
+    color:rgb(21, 97, 109); 
+    border-radius: 28px;
+}
+
+#next-button{
+    font-size: 44px;
+    font-weight: bolder;
+    color:rgb(120, 41, 15); 
+    border-radius: 28px;
+
+}
+
+

@@ -4,32 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Culture G</title>
-    <link rel="stylesheet" href="indexquiz.css">
-    <script defer type ="module" src="indexquiz.js"></script>
+    <link rel="stylesheet" href="style.css">
+     <!-- Importe ici ton fichier JavaScript -->
+    <script defer type="module" src="game.js"></script>
+    <!-- type="module" à la balise script, vous indiquez que le 
+    fichier JavaScript peut utiliser les mots-clés import et export. -->
 </head>
 <body>
-    <div id="quiz-container">
-        <!-- Section pour la question -->
-    <div class="question">
-            Quel est le rôle des sourcils ?
+      <div id="quiz-container">
+      <!-- Section pour la question -->
+   
+      <div class="question" id="question-text">
+        <!-- La question sera injectée ici par JavaScript -->
+      </div>
+  
+      <!-- Section pour les options -->
+      <div class="options" id="options-container">
+        <!-- Les options seront injectées ici par JavaScript -->
+      </div>
+  
+     <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
+      <div class="button-container">
+        <button id="next-button">Suivant</button>
+      </div>
     </div>
-            <!-- Section pour les options -->
-	<div class="options">
-            <button> A - Les faire froncer quand on est en colère</button>
-		    <button> B - Empêcher la transpiration de tomber dans les yeux</button>
-		    <button> C - Décorer le visage</button>
-		    <button> D - Protéger les yeux des rayons UV</button>
-		    </div>
-    <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
-	<div class="button-container">
-            <button id="next-button">Suivant</button>
-    </div>
-
-
-
-
-
-
-    
 </body>
 </html>
