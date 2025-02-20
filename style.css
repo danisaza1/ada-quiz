@@ -21,11 +21,12 @@ body{
     border-radius: 28px;
 }
 
-#next-button{
+.button-style{
     font-size: 44px;
     font-weight: bolder;
     color:rgb(120, 41, 15); 
     border-radius: 28px;
+    cursor: pointer;
 
 }
 
