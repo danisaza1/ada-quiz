@@ -6,11 +6,8 @@ const questionsText = document.getElementById('question-text');
 const answersContainer = document.getElementById('options-container');
 const buttonNext = document.getElementById('next-button');
 const replayButton = document.getElementById('replay-button');
-<<<<<<< HEAD
 let answerSelected = false;
-=======
 const textEnd = document.getElementById('messageEnd');
->>>>>>> 123b55d408a57d83a6e1fe5a473a1bd4a7c0f0d9
 
 //Variables pour suivre l'état du quiz
 let questionIndex = 0;
@@ -23,25 +20,23 @@ let score = 0;
     answersContainer.innerHTML='';
     // Récupérer la question actuelle, donc variable egal a notre base de donnees et puis notre index
     const currentQuestion =quiz_culture_g.questions[questionIndex];
-<<<<<<< HEAD
-    // Injecter la question dans le HTML
-    questionsText.innerText = currentQuestion.text; // .text et non .questions
-=======
     // Inserter la question dans le HTML
     questionsText.innerText = currentQuestion.text;
->>>>>>> 123b55d408a57d83a6e1fe5a473a1bd4a7c0f0d9
   //Pour chaque option on crée un boutton et on l'ajoute
   currentQuestion.options.forEach(options => {
     const buttonAnswer = document.createElement('button');
     buttonAnswer.innerText = options;
     buttonAnswer.classList.add('option-button');
     answersContainer.appendChild(buttonAnswer);
+    console.log(buttonAnswer);
+
+      //on desactive les buttons pour que l'utilisateur puisse click sur un seule
+  const allButtons = buttonAnswer.querySelectorAll('button')
+  allButtons.forEach (button => {
+      button.disable = true;
+  })
+
   }); 
-  //on desactive les buttons pour que l'utilisateur puisse click sur un seule
-const allButtons = buttonAnswer.querySelectorAll('button')
-allButtons.forEach (button => {
-    button.disable = true;
-})
 
 
 
@@ -70,7 +65,6 @@ buttonNext.addEventListener('click', () => {
 
 //ajouter un evenement pour replay
 replayButton.addEventListener('click', () => {
-<<<<<<< HEAD
   questionIndex = 0;
   replayButton.style.display = 'none';
   buttonNext.style.display = 'inline-block';
@@ -98,13 +92,3 @@ function checkAnswer(buttonAnswer, correct_answer) {
     });
   }
 }
-=======
-  questionIndex = 0; // on montre la premiere question
-  replayButton.style.display = 'none'; //on fait disparaitre la question rejouer 
-  buttonNext.style.display = 'inline-block'; //on fait apparaitre la question next 
-  loadQuestion(); //on appelle les questions
-})
-
-//on appelle tous les questions
-loadQuestion();
->>>>>>> 123b55d408a57d83a6e1fe5a473a1bd4a7c0f0d9

@@ -14,11 +14,12 @@ body{
 }
 
 
-.options{
+.option-button{
     font-size: 20px;
     font-weight: bolder;
     color:rgb(21, 97, 109); 
     border-radius: 28px;
+    cursor: pointer
 }
 
 .button-style{
