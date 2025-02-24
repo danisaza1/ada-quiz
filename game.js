@@ -6,6 +6,7 @@ const questionsText = document.getElementById('question-text');
 const answersContainer = document.getElementById('options-container');
 const buttonNext = document.getElementById('next-button');
 const replayButton = document.getElementById('replay-button');
+let answerSelected = false;
 
 //Variables pour suivre l'état du quiz
 let questionIndex =0;
@@ -18,12 +19,12 @@ let questionIndex =0;
     // Récupérer la question actuelle
     const currentQuestion =quiz_culture_g.questions[questionIndex];
     // Injecter la question dans le HTML
-    questionsText.innerText = currentQuestion.questions;
+    questionsText.innerText = currentQuestion.text; // .text et non .questions
   //Pour chaque option on crée un boutton et on l'ajoute
   currentQuestion.options.forEach(options => {
     const buttonAnswer = document.createElement('button');
     buttonAnswer.innerText = options;
-    buttonAnswer.classList.add('options');
+    buttonAnswer.classList.add('option-button');
     answersContainer.appendChild(buttonAnswer);
   });
 }
@@ -55,3 +56,25 @@ replayButton.addEventListener('click', () => {
   buttonNext.style.display = 'inline-block';
   loadQuestion();
 })
+
+// Fonction pour vérifier les réponses des joueurs
+
+function checkAnswer(buttonAnswer, correct_answer) {
+  if (answerSelected) return; // Empêche de cliquer plusieurs fois
+  answerSelected = true;
+
+  const allButtons = document.querySelectorAll('.option-button');
+
+  allButtons.forEach(btn.disabled = true);
+  if (buttonAnswer.innerText.trim() === correct_answer.trim()) {
+    buttonAnswer.style.border = '3px solid green';
+    score++;
+  } else {
+    buttonAnswer.style.border = '3px solid red';
+    allButtons.forEach(btn => {
+      if (btn.innerText.trim() === correct_answer.trim()) {
+          btn.style.border = '3px solid green';
+      }
+    });
+  }
+}
