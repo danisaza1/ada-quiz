@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
      <!-- Importe ici ton fichier JavaScript -->
     <script defer type="module" src="game.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <!-- type="module" à la balise script, vous indiquez que le 
     fichier JavaScript peut utiliser les mots-clés import et export. -->
 </head>
@@ -22,12 +23,16 @@
       <div class="options" id="options-container">
         <!-- Les options seront injectées ici par JavaScript -->
       </div>
+
+      <div id ="explication" style = 'display: none'></div>
+
+      <div id="timer"></div>
   
      <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
       <div class="button-container">
-        <button id="next-button" class="button-style">Suivant</button>
+        <button id="next-button" class="button-style" >Suivant</button>
         <p id="messageEnd"> <!-- ici cest le message de fin --></p>
-        <button id="replay-button" class="button-style" style="display: none;">Rejouer</button>
+        <button id="replay-button" class="button-style" style="display: none">Rejouer</button>
       </div>
     </div>
 </body>

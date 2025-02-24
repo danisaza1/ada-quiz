@@ -8,7 +8,7 @@ questions: [
         "C - Décorer le visage",
         "D - Protéger les yeux des rayons UV",
     ],
-    correct_answer: " B - Empêcher la transpiration de tomber dans les yeux",
+    correct_answer: "B - Empêcher la transpiration de tomber dans les yeux",
     explication_answer: "Les sourcils ont la fonction de diriger la sueur et l'humidité loin des yeux !"
     },
 
@@ -20,7 +20,7 @@ questions: [
         "C - Le calamard géant",
         "D - Le poisson-lune",
     ],
-    correct_answer: " B - La crevette-mante",
+    correct_answer: "B - La crevette-mante",
     explication_answer: "Elle frappe avec une telle vitesse que cela crée une bulle de cavitation, ce qui chauffe l'eau à des températures extrêmes."  
     },
 
@@ -32,7 +32,7 @@ questions: [
         "C - Cristiano Ronaldo",
         "D - Kylian Mbappé",
     ],
-    correct_answer: " C - Cristiano Ronaldo",
+    correct_answer: "C - Cristiano Ronaldo",
     explication_answer: "CR7 est une légende du football, connu pour son numéro 7 et ses exploits avec le Real Madrid et le Portugal."
     },
 
@@ -44,7 +44,7 @@ questions: [
         "C - Le Japon",
         "D - Le Canada",
     ],
-    correct_answer: " A - La Suisse",
+    correct_answer: "A - La Suisse",
     explication_answer: "La Suisse est réputée pour sa consommation massive de chocolat, et ses habitants sont parmi les plus grands amateurs de chocolat au monde !"    
     },
 
@@ -56,7 +56,7 @@ questions: [
         "C - L'ours ",
         "D - Le serpent ",
     ],
-    correct_answer: " B - L'escargot",
+    correct_answer: "B - L'escargot",
     explication_answer: "Les escargots peuvent entrer en hibernation ou en estivation pendant plusieurs années en fonction des conditions environnementales."    
     },
 
@@ -68,7 +68,7 @@ questions: [
         "C - Megan Rapinoe",
         "D - Ada Hegerberg",
     ],
-    correct_answer: " A - Alexia Putellas",
+    correct_answer: "A - Alexia Putellas",
     explication_answer: "Alexia Putellas a remporté deux Ballons d'Or consécutifs en 2021 et 2022 avec le FC Barcelone."
     },
 
@@ -80,7 +80,7 @@ questions: [
         "C - Une tomate",
         "D - Une pomme de terre",
     ],
-    correct_answer: " A - Un œuf",
+    correct_answer: "A - Un œuf",
     explication_answer: "Si tu mets un œuf entier dans le micro-ondes sans le percer, la vapeur s’accumule et l'œuf peut éclater, créant un joli désastre."
     },
 
@@ -92,7 +92,7 @@ questions: [
         "C - La loutre de mer",
         "D - Le castor",
     ],
-    correct_answer: " C - La loutre de mer",
+    correct_answer: "C - La loutre de mer",
     explication_answer: "Les loutres de mer se tiennent la main pendant leur sommeil pour ne pas dériver avec le courant."
     },   
 
@@ -104,7 +104,7 @@ questions: [
         "C - Argentine",
         "D - Portugal",
     ],
-    correct_answer: " B - France",
+    correct_answer: "B - France",
     explication_answer: "La France a gagné la Coupe du Monde 2018 en battant la Croatie 4-2 en finale."
     }, 
             
@@ -116,6 +116,6 @@ questions: [
         "C - A 10H",
         "D - Quand on veut !",
     ],
-    correct_answer: " D - Quand on veut !",
+    correct_answer: "D - Quand on veut !",
     },       
 ]}
