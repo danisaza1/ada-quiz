@@ -1,7 +1,6 @@
 //Import de question et reponses à partir de notre base de donnees
 import { quiz_culture_g } from './questions.js';
-
-//Récuperer les emplacements en HTML pour inserer tout dont on a besoin 
+//Récuperer les emplacements en HTML pour inserer tout dont on a besoin
 const questionsText = document.getElementById('question-text');
 const answersContainer = document.getElementById('options-container');
 const buttonNext = document.getElementById('next-button');
@@ -9,59 +8,57 @@ const replayButton = document.getElementById('replay-button');
 const textEnd = document.getElementById('messageEnd');
 const explication = document.getElementById('explication');
 const timerElement = document.getElementById('timer');
-let time = 5;
-timerElement.innerText = time;
-let timerInterval;
-
-
+const startButton = document.getElementById('start-button');
+const introContainer = document.getElementById ('start');
+const quizContainer = document.getElementById ('quiz-container');
+const goodAnswerSound = document.getElementById('good_answer');
+const wrongAnswerSound = document.getElementById('wrong_answer');
 //Variables pour suivre l'état du quiz
 let questionIndex = 0;
 let score = 0;
+let time = 5;
+let timerInterval;
+const endSound = new Audio('/sounds/end_game.wav');
+
+
+
 
 // Afficher un timer
 function startTimer() {
-  clearInterval(timerInterval); // Empêche les anciens timers de s'accumuler
-  time = 5; // Réinitialise le temps
-  updateTimerDisplay(); // Met à jour immédiatement l'affichage
-
+  clearInterval(timerInterval);
+  time = 6;
+  
+  //  Affichage initial correct en forçant la mise à jour après 1 ms
+  setTimeout(() => {
+    time--; 
+    updateTimerDisplay();
+  }, 1);
+  
   timerInterval = setInterval(() => {
-      if (time <= 0) { // Vérifie si le timer est déjà à 0
-          clearInterval(timerInterval); // Stoppe le timer
-          timerElement.innerText = "00:00"; // Affiche proprement "00:00"
-          buttonNext.disabled = false; // Active le bouton "Suivant"
-
-          // Désactive toutes les réponses
+      if (time <= 0) { 
+          clearInterval(timerInterval);
+          timerElement.innerText = "00:00"; 
+          buttonNext.disabled = false;
           const allButtons = document.querySelectorAll('.option-button');
-          allButtons.forEach(btn => {
-              btn.disabled = true;
-              btn.style.backgroundColor = "grey";
-              btn.style.color = "white";
-              btn.style.border = "1px solid darkgrey";
-              btn.style.cursor = "not-allowed";
-              btn.style.opacity = "0.6";
-          });
-
-          return; // Stoppe l'exécution de la fonction ici
+          allButtons.forEach(btn => btn.disabled = true);
+          return;
       }
-
-      time--; // Diminue le temps seulement si > 0
+      time--;
       updateTimerDisplay();
   }, 1000);
 }
+
+
+
 
 // Fonction pour mettre à jour l'affichage du timer
 function updateTimerDisplay() {
   let minutes = Math.floor(time / 60);
   let secondes = time % 60;
-
   minutes = minutes < 10 ? "0" + minutes : minutes;
   secondes = secondes < 10 ? "0" + secondes : secondes;
-
   timerElement.innerText = minutes + ":" + secondes;
 }
-
-
-
 //Fonction pour afficher une question basée sur l'index actuel
   function loadQuestion(){
      // Vider le conteneur des options, pour afficher la premiere question
@@ -79,27 +76,24 @@ function updateTimerDisplay() {
 // Ajoute l'événement pour vérifier la réponse
     buttonAnswer.addEventListener('click', () => checkAnswer(buttonAnswer, currentQuestion));
     buttonNext.disabled = true;
-  }); 
-  
+  });
   startTimer(); // On redémarre le timer à chaque question
-
 }
-
-
-
+quizContainer.style.display = 'none';
+startButton.addEventListener ('click', function() {
+  introContainer.style.display = 'none';
+  quizContainer.style.display = 'block';
+  loadQuestion();
+}
+)
 // Fonction pour vérifier les réponses des joueurs
-
 function checkAnswer(buttonAnswer, currentQuestion) {
-
   if (time < 0) return; // Empêche de répondre après la fin du timer
   clearInterval(timerInterval); // Arrêter le timer lorsque l'utilisateur répond
-
 const allButtons = document.querySelectorAll('.option-button');
-
 const userAnswer = buttonAnswer.innerText;
 const goodAnswer = currentQuestion.correct_answer;
 buttonNext.disabled = false;
-
 if (userAnswer.trim() === goodAnswer.trim()) {
   buttonAnswer.style.border = '3px solid green';
   score++;
@@ -107,27 +101,28 @@ if (userAnswer.trim() === goodAnswer.trim()) {
   explication.style.display = 'block';
   console.log(score);
 
+  // Jouer le son pour la bonne réponse
+  goodAnswerSound.play();
+
 } else {
   buttonAnswer.style.border = '3px solid red';
   explication.innerText = currentQuestion.explication_answer;
   explication.style.display = 'block';
   console.log(explication);
+
+  // Jouer le son pour la mauvaise réponse
+  wrongAnswerSound.play();
+
 }
   allButtons.forEach(btn => {
     btn.disabled = true;
   })
   console.log(buttonAnswer.disabled);
-
   if (buttonAnswer) {
     clearInterval(timerInterval); // Stoppe le timer quand il atteint 0
-    buttonNext.disabled = false; 
-
+    buttonNext.disabled = false;
 }
 }
-
-
-
-
   // Ajouter un écouteur d'événements pour le bouton "Suivant"
 buttonNext.addEventListener('click', () => {
   buttonNext.disabled = true;
@@ -135,7 +130,6 @@ buttonNext.addEventListener('click', () => {
   questionIndex++;
   explication.style.display = 'none';
   // Vérifier s'il reste des questions
-
   if ( questionIndex< quiz_culture_g.questions.length) {
     // Afficher la question suivante
     loadQuestion();
@@ -148,23 +142,22 @@ buttonNext.addEventListener('click', () => {
     replayButton.style.display = 'inline-block'; //on montre le button rejouer
   }
 });
-
-
-
 function reactionFinal(score) {
+  endSound.play();
+  timerElement.style.display = 'none';
   if (score <= 4) {
     textEnd.innerText = 'Tu peux mieux faire';
   } else if (score >= 5 && score <= 7) {
-    textEnd.innerText = 'Bien joué ! 👍';
+    textEnd.innerText = 'Bien joué ! :+1:';
   } else if (score > 7 && score < 10) {  // Modifié ici
     textEnd.innerText = 'Quel as !';
   } else {
     textEnd.innerText = 'Parfait ! Un véritable sans-faute ! ';
+
+    // Jouer la musique de fin
     var end = Date.now() + (15 * 100);
-
 // go Buckeyes!
-var colors = ['#bb0000', '#ffffff'];
-
+var colors = ['#BB0000', '#FFFFFF'];
 (function frame() {
   confetti({
     particleCount: 2,
@@ -180,16 +173,12 @@ var colors = ['#bb0000', '#ffffff'];
     origin: { x: 1 },
     colors: colors
   });
-
   if (Date.now() < end) {
     requestAnimationFrame(frame);
   }
 }());
   }
 }
-
-
-
 //ajouter un evenement pour replay
 replayButton.addEventListener('click', () => {
   questionIndex = 0;
@@ -197,9 +186,7 @@ replayButton.addEventListener('click', () => {
   replayButton.style.display = 'none';
   buttonNext.style.display = 'inline-block';
   textEnd.style.display = 'none';
+  timerElement.style.display = 'inline-block';
     loadQuestion();
 })
-
-
-
 loadQuestion(); // Afficher la première question
