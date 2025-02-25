@@ -11,6 +11,7 @@ const explication = document.getElementById('explication');
 const timerElement = document.getElementById('timer');
 let time = 5;
 timerElement.innerText = time;
+let timerInterval;
 
 
 //Variables pour suivre l'état du quiz
@@ -18,25 +19,46 @@ let questionIndex = 0;
 let score = 0;
 
 // Afficher un timer
+function startTimer() {
+  clearInterval(timerInterval); // Empêche les anciens timers de s'accumuler
+  time = 5; // Réinitialise le temps
+  updateTimerDisplay(); // Met à jour immédiatement l'affichage
 
+  timerInterval = setInterval(() => {
+      if (time <= 0) { // Vérifie si le timer est déjà à 0
+          clearInterval(timerInterval); // Stoppe le timer
+          timerElement.innerText = "00:00"; // Affiche proprement "00:00"
+          buttonNext.disabled = false; // Active le bouton "Suivant"
 
-function diminuerTemps() {
-  let minutes = parseInt(time / 60, 10);
-  let secondes = parseInt(time % 60, 10);
+          // Désactive toutes les réponses
+          const allButtons = document.querySelectorAll('.option-button');
+          allButtons.forEach(btn => {
+              btn.disabled = true;
+              btn.style.backgroundColor = "grey";
+              btn.style.color = "white";
+              btn.style.border = "1px solid darkgrey";
+              btn.style.cursor = "not-allowed";
+              btn.style.opacity = "0.6";
+          });
+
+          return; // Stoppe l'exécution de la fonction ici
+      }
+
+      time--; // Diminue le temps seulement si > 0
+      updateTimerDisplay();
+  }, 1000);
+}
+
+// Fonction pour mettre à jour l'affichage du timer
+function updateTimerDisplay() {
+  let minutes = Math.floor(time / 60);
+  let secondes = time % 60;
 
   minutes = minutes < 10 ? "0" + minutes : minutes;
   secondes = secondes < 10 ? "0" + secondes : secondes;
-  
+
   timerElement.innerText = minutes + ":" + secondes;
-  time = time <= 0 ? 0 : time - 1;
-  if (time === 0) {
-    checkAnswer.disabled = true;
-    buttonNext.disabled = false;
-  }
-  
- 
 }
-setInterval(diminuerTemps, 1000);
 
 
 
@@ -57,8 +79,10 @@ setInterval(diminuerTemps, 1000);
 // Ajoute l'événement pour vérifier la réponse
     buttonAnswer.addEventListener('click', () => checkAnswer(buttonAnswer, currentQuestion));
     buttonNext.disabled = true;
-  
   }); 
+  
+  startTimer(); // On redémarre le timer à chaque question
+
 }
 
 
@@ -66,6 +90,10 @@ setInterval(diminuerTemps, 1000);
 // Fonction pour vérifier les réponses des joueurs
 
 function checkAnswer(buttonAnswer, currentQuestion) {
+
+  if (time < 0) return; // Empêche de répondre après la fin du timer
+  clearInterval(timerInterval); // Arrêter le timer lorsque l'utilisateur répond
+
 const allButtons = document.querySelectorAll('.option-button');
 
 const userAnswer = buttonAnswer.innerText;
@@ -88,11 +116,14 @@ if (userAnswer.trim() === goodAnswer.trim()) {
   allButtons.forEach(btn => {
     btn.disabled = true;
   })
+  console.log(buttonAnswer.disabled);
 
-
+  if (buttonAnswer) {
+    clearInterval(timerInterval); // Stoppe le timer quand il atteint 0
+    buttonNext.disabled = false; 
 
 }
-
+}
 
 
 
@@ -116,7 +147,6 @@ buttonNext.addEventListener('click', () => {
     buttonNext.style.display = 'none'; // Cacher le bouton Suivant
     replayButton.style.display = 'inline-block'; //on montre le button rejouer
   }
-  diminuerTemps.reset();
 });
 
 

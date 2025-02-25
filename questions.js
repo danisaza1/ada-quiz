@@ -117,5 +117,6 @@ questions: [
         "D - Quand on veut !",
     ],
     correct_answer: "D - Quand on veut !",
+    explication_answer: `C'est toujours l'heure de l'apéro quelque part dans le monde ! 🍻`
     },       
 ]}

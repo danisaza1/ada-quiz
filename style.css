@@ -22,6 +22,14 @@ body{
     cursor: pointer
 }
 
+.option-button:disabled {
+    background-color: grey;
+    color: white;
+    border: 1px solid darkgray;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .button-style{
     font-size: 44px;
     font-weight: bolder;
