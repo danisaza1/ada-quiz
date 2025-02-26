@@ -26,7 +26,7 @@ const endSound = new Audio('/sounds/end_game.wav');
 // Afficher un timer
 function startTimer() {
   clearInterval(timerInterval);
-  time = 6;
+  time = 25;
   
   //  Affichage initial correct en forçant la mise à jour après 1 ms
   setTimeout(() => {
@@ -108,6 +108,11 @@ if (userAnswer.trim() === goodAnswer.trim()) {
   buttonAnswer.style.border = '3px solid red';
   explication.innerText = currentQuestion.explication_answer;
   explication.style.display = 'block';
+  allButtons.forEach( btn => {
+    if (btn.innerText.trim() === goodAnswer.trim()) {
+        btn.style.border = '3px solid green';
+    }
+});
   console.log(explication);
 
   // Jouer le son pour la mauvaise réponse

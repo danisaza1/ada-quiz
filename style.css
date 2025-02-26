@@ -95,9 +95,10 @@
       #0C1142 65%
     )
     fixed;
-  background-size: 100% var(--background-height, 100vh);
+  /* background-size: 100% var(--background-height, 100vh); */
+  background-size: cover;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
@@ -172,7 +173,8 @@
 .explication {
   font-family: "Road Rage";
   font-weight: normal;
-  font-size: 50px;
+  font-size: 40px;
+  margin-top: 100px;;
 }
 .glow {
   color: #fff;
@@ -191,7 +193,7 @@
 }
 .question {
   font-weight: 900;
-  font-size: calc(60px + 2vh);
+  font-size: calc(30px + 2vh);
   text-align: center;
   display: inline-block;
   background-image: linear-gradient(
@@ -218,6 +220,11 @@
   opacity: 1;
   position: absolute;
   z-index: -1;
+}
+@media screen and (max-width: 768px) { 
+  .question {
+    font-size: calc(30px + 1vh); /* Réduction de la taille des questions sur mobile */
+  }
 }
 .road {
   --grid-size: 90px;
@@ -269,17 +276,18 @@
 #timer {
   font-weight: bold;
   font-size: 30px;
-      display: inline-block;
-      margin-left: 15px;
-      margin-bottom: 20px;
-      background-color: #fff; /* Fond blanc */
-      color: #333; /* Couleur du texte */
-      padding: 10px 20px; /* Espacement autour du texte */
-      border: 2px solid #ccc; /* Bordure grise claire */
-      border-radius: 8px; /* Coins arrondis */
-      font-size: 18px; /* Taille du texte */
-      font-weight: bold; /* Texte en gras */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+  display: inline-block;
+  margin-left: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: #fff; /* Fond blanc */
+  color: #333; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement autour du texte */
+  border: 2px solid #ccc; /* Bordure grise claire */
+  border-radius: 50%; /* Coins arrondis */
+  font-size: 18px; /* Taille du texte */
+  font-weight: bold; /* Texte en gras */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre subtile */
 }
 
 
@@ -338,6 +346,12 @@
     border: 1px solid darkgray;
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+#options-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .button-style{
     position: relative;

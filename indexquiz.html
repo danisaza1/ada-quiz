@@ -31,7 +31,6 @@
     <div class="road-off" ></div>
     <div class="overlay"></div>
     </div>
-  </div>
   <svg width="0" height="0">
     <filter id="filter">
     <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" id="fractalNoise"/>
@@ -92,6 +91,7 @@
     <br>
     <button id="start-button"> Play </button>
   </p>
+  <div id="timer"></div>
       <div id="quiz-container">
         <audio id="good_answer" src="sounds/good_answer.wav" preload="auto"></audio>
         <audio id="wrong_answer" src="sounds/wrong_answer.mp3" preload="auto"></audio>
@@ -99,19 +99,18 @@
       <div class="question shine" id="question-text">
         <!-- La question sera injectée ici par JavaScript -->
       </div>
-      <div id="timer"></div>
       <!-- Section pour les options -->
       <div class="options" id="options-container">
         <!-- Les options seront injectées ici par JavaScript -->
       </div>
-      <div class="explication glow" id ="explication" style = 'display: none'></div>
-     <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
+      <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
       <div class="button-container">
         <button id="next-button" class="button-style" >Suivant</button>
         <p id="messageEnd"> <!-- ici cest le message de fin --></p>
         <button id="replay-button" class="button-style" style="display: none">Rejouer</button>
       </div>
-    </div>
+      <div class="explication glow" id ="explication" style = 'display: none'></div>
+      </div>
 </body>
 </html>
 
