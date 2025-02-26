@@ -26,6 +26,7 @@ let questionIndex = 0;
 let score = 0;
 let time = 5;
 let timerInterval;
+let progress = 0;
 const endSound = new Audio('/sounds/end_game.wav');
 let currentQuiz = null;
 buttonNext.style.display = 'none';
@@ -40,6 +41,7 @@ function startQuiz(quizTheme) {
   textEnd.style.display = 'none';
   replayButton.style.display = 'none';
   timerElement.style.display = 'inline-block'; // Afficher le timer lors du début du quiz
+  document.getElementById("progression").value = 0;
   questionIndex = 0;
   score = 0;
   loadQuestion(); // Charger la première question
@@ -118,6 +120,24 @@ function updateTimerDisplay() {
 
 
 
+//function pour barre de progression
+function growProgression (){
+  progress +=10;
+  document.getElementById("progression").value = progress;
+  document.getElementById("progression").setAttribute("style", "background-color:white; height: 10px; border-radius: 10px; width: " + progress + "%;");
+}
+
+buttonNext.addEventListener("click", growProgression);
+replayButton.addEventListener("click", progressionzero);
+
+function progressionzero(){
+  if( progress >=100){
+  progress=0 }
+  document.getElementById("progression").value = 0;
+  console.log(progress+"progress")
+}
+
+
 
 
 // Fonction pour vérifier les réponses des joueurs
@@ -151,7 +171,6 @@ if (userAnswer.trim() === goodAnswer.trim()) {
 
   // Jouer le son pour la mauvaise réponse
   wrongAnswerSound.play();
-
 }
   allButtons.forEach(btn => {
     btn.disabled = true;
@@ -197,6 +216,7 @@ function reactionFinal(score) {
   endSound.play();
   textEnd.style.display = 'block';
   timerElement.style.display = 'none';
+  document.getElementById("progression").style.display = 'none';
   if (score <= 4) {
     textEnd.innerText = 'Tu peux mieux faire';
   } else if (score >= 5 && score <= 7) {
@@ -240,7 +260,6 @@ replayButton.addEventListener('click', () => {
   // Masquer l'écran du quiz et afficher l'écran de sélection du thème
   quizContainer.style.display = 'none';
   introContainer.style.display = 'block'; // Affiche l'écran de sélection du thème
-  
   // Réinitialiser l'état du quiz
   questionIndex = 0;
   score = 0;
