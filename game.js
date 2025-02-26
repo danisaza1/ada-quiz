@@ -3,7 +3,6 @@ import { quiz_culture_g } from './questions.js';
 import { quiz_animaux } from './questions_animaux.js';
 import { quiz_anatomie } from './questions_anatomie.js';
 import { quiz_football } from './questions_football.js';
-
 //Récuperer les emplacements en HTML pour inserer tout dont on a besoin
 const questionsText = document.getElementById('question-text');
 const answersContainer = document.getElementById('options-container');
@@ -20,17 +19,15 @@ const quizCultureButton = document.getElementById('quiz-culture-btn');
 const quizAnimauxButton = document.getElementById('quiz-animaux-btn');
 const quizAnatomieButton = document.getElementById('quiz-anatomie-btn');
 const quizFootballButton = document.getElementById('quiz-football-btn');
-
 //Variables pour suivre l'état du quiz
 let questionIndex = 0;
 let score = 0;
 let time = 5;
 let timerInterval;
+let progress = 0;
 const endSound = new Audio('/sounds/end_game.wav');
 let currentQuiz = null;
 buttonNext.style.display = 'none';
-
-
 // Fonction pour initialiser le quiz en fonction du thème sélectionné
 function startQuiz(quizTheme) {
   currentQuiz = quizTheme;
@@ -40,21 +37,16 @@ function startQuiz(quizTheme) {
   textEnd.style.display = 'none';
   replayButton.style.display = 'none';
   timerElement.style.display = 'inline-block'; // Afficher le timer lors du début du quiz
+  document.getElementById("progression").value = 0;
   questionIndex = 0;
   score = 0;
   loadQuestion(); // Charger la première question
 }
-
-
-
 // Événements pour choisir le thème
 quizFootballButton.addEventListener('click', () => startQuiz(quiz_football));
 quizAnimauxButton.addEventListener('click', () => startQuiz(quiz_animaux));
 quizAnatomieButton.addEventListener('click', () => startQuiz(quiz_anatomie));
 quizCultureButton.addEventListener('click', () => startQuiz(quiz_culture_g));
-
-
-
 //Fonction pour afficher une question basée sur l'index actuel
   function loadQuestion(){
      // Vider le conteneur des options, pour afficher la premiere question
@@ -75,25 +67,19 @@ quizCultureButton.addEventListener('click', () => startQuiz(quiz_culture_g));
   });
   startTimer(); // On redémarre le timer à chaque question
 }
-
-
-
-
 // Afficher un timer
 function startTimer() {
   clearInterval(timerInterval);
   time = 25;
-  
   //  Affichage initial correct en forçant la mise à jour après 1 ms
   setTimeout(() => {
-    time--; 
+    time--;
     updateTimerDisplay();
   }, 1);
-  
   timerInterval = setInterval(() => {
-      if (time <= 0) { 
+      if (time <= 0) {
           clearInterval(timerInterval);
-          timerElement.innerText = "00:00"; 
+          timerElement.innerText = "00:00";
           buttonNext.disabled = false;
           const allButtons = document.querySelectorAll('.option-button');
           allButtons.forEach(btn => btn.disabled = true);
@@ -103,10 +89,6 @@ function startTimer() {
       updateTimerDisplay();
   }, 1000);
 }
-
-
-
-
 // Fonction pour mettre à jour l'affichage du timer
 function updateTimerDisplay() {
   let minutes = Math.floor(time / 60);
@@ -115,11 +97,19 @@ function updateTimerDisplay() {
   secondes = secondes < 10 ? "0" + secondes : secondes;
   timerElement.innerText = minutes + ":" + secondes;
 }
-
-
-
-
-
+function growProgression (){
+  progress +=10;
+  document.getElementById("progression").value = progress;
+  document.getElementById("progression").setAttribute("style", "background-color: purple; height: 20px; border-radius: 10px; width: " + progress + "%;");
+}
+buttonNext.addEventListener("click", growProgression);
+replayButton.addEventListener("click", progressionzero);
+function progressionzero(){
+  if( progress >=100){
+  progress=0 }
+  document.getElementById("progression").value = 0;
+  console.log(progress+"progress")
+}
 // Fonction pour vérifier les réponses des joueurs
 function checkAnswer(buttonAnswer, currentQuestion) {
   if (time < 0) return; // Empêche de répondre après la fin du timer
@@ -134,10 +124,8 @@ if (userAnswer.trim() === goodAnswer.trim()) {
   explication.innerHTML = currentQuestion.explication_answer;
   explication.style.display = 'block';
   console.log(score);
-
   // Jouer le son pour la bonne réponse
   goodAnswerSound.play();
-
 } else {
   buttonAnswer.style.border = '3px solid red';
   explication.innerText = currentQuestion.explication_answer;
@@ -148,10 +136,8 @@ if (userAnswer.trim() === goodAnswer.trim()) {
     }
 });
   console.log(explication);
-
   // Jouer le son pour la mauvaise réponse
   wrongAnswerSound.play();
-
 }
   allButtons.forEach(btn => {
     btn.disabled = true;
@@ -162,12 +148,6 @@ if (userAnswer.trim() === goodAnswer.trim()) {
     buttonNext.disabled = false;
 }
 }
-
-
-
-
-
-
   // Ajouter un écouteur d'événements pour le bouton "Suivant"
 buttonNext.addEventListener('click', () => {
   buttonNext.disabled = true;
@@ -187,16 +167,12 @@ buttonNext.addEventListener('click', () => {
     replayButton.style.display = 'inline-block'; //on montre le button rejouer
   }
 });
-
-
-
-
-
 //function pour les messages selon le score
 function reactionFinal(score) {
   endSound.play();
   textEnd.style.display = 'block';
   timerElement.style.display = 'none';
+  document.getElementById("progression").style.display = 'none';
   if (score <= 4) {
     textEnd.innerText = 'Tu peux mieux faire';
   } else if (score >= 5 && score <= 7) {
@@ -205,7 +181,6 @@ function reactionFinal(score) {
     textEnd.innerText = 'Quel as !';
   } else {
     textEnd.innerText = 'Parfait ! Un véritable sans-faute ! ';
-
     // Jouer la musique de fin
     var end = Date.now() + (15 * 100);
 // go Buckeyes!
@@ -231,28 +206,20 @@ var colors = ['#BB0000', '#FFFFFF'];
 }());
   }
 }
-
-
-
-
 //ajouter un evenement pour replay
 replayButton.addEventListener('click', () => {
   // Masquer l'écran du quiz et afficher l'écran de sélection du thème
   quizContainer.style.display = 'none';
   introContainer.style.display = 'block'; // Affiche l'écran de sélection du thème
-  
   // Réinitialiser l'état du quiz
   questionIndex = 0;
   score = 0;
-  
   // Cacher l'écran de fin et les autres éléments
   textEnd.style.display = 'none';
   timerElement.style.display = 'none'; // Réafficher le timer
-
   // Réinitialiser les éléments du quiz (comme les options de réponse et la question)
   answersContainer.innerHTML = ''; // Effacer les options de réponse
   questionsText.innerHTML = ''; // Effacer la question
   explication.style.display = 'none'; // Cacher l'explication
   buttonNext.style.display = 'none'; // Cacher le bouton suivant
 });
-
