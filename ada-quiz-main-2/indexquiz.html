@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Culture G</title>
+    <link rel="stylesheet" href="style.css">
+     <!-- Importe ici ton fichier JavaScript -->
+    <script defer type="module" src="game.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <!-- type="module" à la balise script, vous indiquez que le
+    fichier JavaScript peut utiliser les mots-clés import et export. -->
+</head>
+<body>
+  <h1></h1>
+  <div class="background-80s animated-clouds stars" style="--background-height:100vh">
+    <div class="sun"></div>
+    <div class="grid" style="--grid-color:rgba(115,59,139,0.7);--grid-size:30px;--grid-blur:1px;"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#b533b3;--mountain-offset:10vw;--mountain-tilt:-20deg"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#681e6b;--mountain-tilt:59deg;--mountain-offset:20vw;"></div>
+    <div class="mountain" style="--mountain-base:8vw;--mountain-height:4vw;--mountain-color1:#a684cb;--mountain-color2:#b533b3;--mountain-offset:20vw;--mountain-tilt:-20deg"></div>
+    <div class="mountain" style="--mountain-base:3vw;--mountain-height:4vw;--mountain-color1:#a684cb;--mountain-color2:#681e6b;--mountain-tilt:45deg;--mountain-offset:28vw;"></div>
+    <div class="mountain" style="--mountain-base:5vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#681e6b;--mountain-offset:-40vw;--mountain-tilt:-20deg"></div>
+    <div class="mountain" style="--mountain-base:5vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#b533b3;--mountain-tilt:33deg;--mountain-offset:-35vw;"></div>
+    <div class="mountain" style="--mountain-base:5vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#681e6b;--mountain-tilt:-62deg;--mountain-offset:-5vw;"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#2a025d;--mountain-tilt:-20deg"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:5vw;--mountain-color1:#a684cb;--mountain-color2:#150030;--mountain-tilt:59deg;--mountain-offset:10vw;"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:10vw;--mountain-color1:#a684cb;--mountain-color2:#150030;--mountain-tilt:-33deg;--mountain-offset:-30vw;"></div>
+    <div class="mountain" style="--mountain-base:10vw;--mountain-height:10vw;--mountain-color1:#a684cb;--mountain-color2:#2a025d;--mountain-offset:-20vw;--mountain-tilt:20deg"></div>
+    <div class="mountain" style="--mountain-base:3vw;--mountain-height:10vw;--mountain-color1:#a684cb;--mountain-color2:#681e6b;--mountain-tilt:45.5deg;--mountain-offset:-10vw;"></div>
+    <div class="road-off" ></div>
+    <div class="overlay"></div>
+    </div>
+  <svg width="0" height="0">
+    <filter id="filter">
+    <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="10" id="fractalNoise"/>
+    <feDisplacementMap id="displacementMap" in="SourceGraphic" scale="120" />
+    </filter>
+    <animate
+      xlink:href="#displacementMap"
+      id="animclouds1"
+      begin="0; animclouds2.end"
+      attributeName="scale"
+      from="50"
+      to="180"
+      dur="3s"
+      fill="freeze"
+      />
+      <animate
+        xlink:href="#displacementMap"
+        id="animclouds2"
+        begin="animclouds1.end"
+        attributeName="scale"
+        from="180"
+        to="50"
+        dur="3s"
+        fill="freeze"
+        />
+        <animate
+          xlink:href="#fractalNoise"
+          id="animclouds3"
+          begin="0;animclouds4.end"
+          attributeName="baseFrequency"
+          from="0.03"
+          to="0.01"
+          dur="30s"
+          fill="freeze"
+          />
+          <animate
+            xlink:href="#fractalNoise"
+            id="animclouds4"
+            begin="animclouds3.end"
+            attributeName="baseFrequency"
+            from="0.01"
+            to="0.03"
+            dur="30s"
+            fill="freeze"
+            />
+          </svg>
+  <p id="start">
+    Bienvenue à notre <em> Grand Jeu Quiz </em>
+    <br>
+    <br>
+    Vous allez tester vos connaissances et découvrir des faits fascinants sur
+    des sujets variés. 
+    <br>
+    Que vous soyez un expert ou simplement
+    curieux, ce quiz est fait pour vous. Alors, concentrez-vous, et que
+    le meilleur gagne !
+    <br>
+    <br>
+    Bonne chance à tous ! 🎉
+    <br>
+    <br>
+    Choisissez un thème de quiz : 
+    <br>
+  <button class= "buttonquiz" id="quiz-culture-btn">Culture Générale</button>
+  <button class= "buttonquiz" id="quiz-animaux-btn">Animaux</button>
+  <button class= "buttonquiz" id="quiz-football-btn">Football</button>
+  <button class= "buttonquiz" id="quiz-anatomie-btn">Anatomie</button>
+  </p>
+  <div id="timer" style = 'display: none'></div>
+      <div id="quiz-container">
+        <audio id="good_answer" src="sounds/good_answer.wav" preload="auto"></audio>
+        <audio id="wrong_answer" src="sounds/wrong_answer.mp3" preload="auto"></audio>
+      <!-- Section pour la question -->
+      <div class="question shine" id="question-text">
+        <!-- La question sera injectée ici par JavaScript -->
+      </div>
+      <!-- Section pour les options -->
+      <div class="options" id="options-container">
+        <!-- Les options seront injectées ici par JavaScript -->
+      </div>
+      <!-- Prévois déjà le design du bouton "suivant" pour passer à la prochaine question -->
+      <div class="button-container">
+        <button id="next-button" class="button-style" >Suivant</button>
+        <p id="messageEnd"> <!-- ici cest le message de fin --></p>
+        <button id="replay-button" class="button-style" style="display: none">Rejouer</button>
+      </div>
+      <div class="explication glow" id ="explication" style = 'display: none'></div>
+      </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
