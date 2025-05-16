@@ -3,6 +3,7 @@ import { quiz_culture_g } from './questions.js';
 import { quiz_animaux } from './questions_animaux.js';
 import { quiz_anatomie } from './questions_anatomie.js';
 import { quiz_football } from './questions_football.js';
+
 //Récuperer les emplacements en HTML pour inserer tout dont on a besoin
 const questionsText = document.getElementById('question-text');
 const answersContainer = document.getElementById('options-container');
@@ -19,23 +20,25 @@ const quizCultureButton = document.getElementById('quiz-culture-btn');
 const quizAnimauxButton = document.getElementById('quiz-animaux-btn');
 const quizAnatomieButton = document.getElementById('quiz-anatomie-btn');
 const quizFootballButton = document.getElementById('quiz-football-btn');
+
 //Variables pour suivre l'état du quiz
 let questionIndex = 0;
 let score = 0;
 let time = 5;
 let timerInterval;
-let progress = 0;
-const endSound = new Audio('/sounds/end_game.wav');
 let currentQuiz = null;
 buttonNext.style.display = 'none';
+
+
 // Fonction pour initialiser le quiz en fonction du thème sélectionné
 function startQuiz(quizTheme) {
   currentQuiz = quizTheme;
   introContainer.style.display = 'none';
-  quizContainer.style.display = 'block';
-  buttonNext.style.display = 'inline-block';
   textEnd.style.display = 'none';
   replayButton.style.display = 'none';
+  quizContainer.style.display = 'block';
+  buttonNext.style.display = 'inline-block';
+  
   timerElement.style.display = 'inline-block'; // Afficher le timer lors du début du quiz
   document.getElementById("progression").value = 0;
   document.getElementById("progression").value = 0;
@@ -43,18 +46,27 @@ function startQuiz(quizTheme) {
   score = 0;
   loadQuestion(); // Charger la première question
 }
+
+
 // Événements pour choisir le thème
 quizFootballButton.addEventListener('click', () => startQuiz(quiz_football));
 quizAnimauxButton.addEventListener('click', () => startQuiz(quiz_animaux));
 quizAnatomieButton.addEventListener('click', () => startQuiz(quiz_anatomie));
 quizCultureButton.addEventListener('click', () => startQuiz(quiz_culture_g));
+
+
 //Fonction pour afficher une question basée sur l'index actuel
   function loadQuestion(){
      // Vider le conteneur des options, pour afficher la premiere question
     answersContainer.innerHTML='';
     // Récupérer la question actuelle, donc variable egal a notre base de donnees et puis notre index
+     //aqui tenemos una variable = objeto que adentro tienes unas 
+  // propiedades, y estamos llamando a la propiedad questions 
+  // y entre [] quiere decir la pregunta actual aqui questions avec S,
+  //  parce dans la basse de donnees ca equivaut au tableau en general
     const currentQuestion = currentQuiz.questions[questionIndex];
     // Inserter la question dans le HTML
+    //el punto nos deja acceder a les question, dentro de currentQuestion
     questionsText.innerText = currentQuestion.text;
   //Pour chaque option on crée un boutton et on l'ajoute
   currentQuestion.options.forEach(options => {
@@ -68,10 +80,12 @@ quizCultureButton.addEventListener('click', () => startQuiz(quiz_culture_g));
   });
   startTimer(); // On redémarre le timer à chaque question
 }
+
+
 // Afficher un timer
 function startTimer() {
   clearInterval(timerInterval);
-  time = 25;
+  time = 21;
   //  Affichage initial correct en forçant la mise à jour après 1 ms
   setTimeout(() => {
     time--;
@@ -90,6 +104,8 @@ function startTimer() {
       updateTimerDisplay();
   }, 1000);
 }
+
+
 // Fonction pour mettre à jour l'affichage du timer
 function updateTimerDisplay() {
   let minutes = Math.floor(time / 60);
@@ -100,6 +116,7 @@ function updateTimerDisplay() {
 }
 
 
+let progress = 0;
 
 //function pour barre de progression
 function growProgression (){
@@ -108,19 +125,21 @@ function growProgression (){
   document.getElementById("progression").setAttribute("style", "background-color:white; height: 10px; border-radius: 10px; width: " + progress + "%;");
 }
 
-buttonNext.addEventListener("click", growProgression);
-replayButton.addEventListener("click", progressionzero);
 
+//function remettre a zero la barre
 function progressionzero(){
   if( progress >=100){
   progress=0 }
   document.getElementById("progression").value = 0;
-  console.log(progress+"progress")
 }
 
 
+// Événements pour augmenter la barre de progression
+buttonNext.addEventListener("click", growProgression);
+replayButton.addEventListener("click", progressionzero);
 
 
+ 
 // Fonction pour vérifier les réponses des joueurs
 function checkAnswer(buttonAnswer, currentQuestion) {
   if (time < 0) return; // Empêche de répondre après la fin du timer
@@ -153,12 +172,16 @@ if (userAnswer.trim() === goodAnswer.trim()) {
   allButtons.forEach(btn => {
     btn.disabled = true;
   })
+  
   console.log(buttonAnswer.disabled);
   if (buttonAnswer) {
     clearInterval(timerInterval); // Stoppe le timer quand il atteint 0
     buttonNext.disabled = false;
 }
 }
+
+
+
   // Ajouter un écouteur d'événements pour le bouton "Suivant"
 buttonNext.addEventListener('click', () => {
   buttonNext.disabled = true;
@@ -178,6 +201,9 @@ buttonNext.addEventListener('click', () => {
     replayButton.style.display = 'inline-block'; //on montre le button rejouer
   }
 });
+
+
+const endSound = new Audio('/sounds/end_game.wav');
 //function pour les messages selon le score
 function reactionFinal(score) {
   endSound.play();
@@ -185,16 +211,16 @@ function reactionFinal(score) {
   timerElement.style.display = 'none';
   document.getElementById("progression").style.display = 'none';
   if (score <= 4) {
-    textEnd.innerText = 'Tu peux mieux faire';
-  } else if (score >= 5 && score <= 7) {
-    textEnd.innerText = 'Bien joué !';
-  } else if (score > 7 && score < 10) {  // Modifié ici
-    textEnd.innerText = 'Quel as !';
-  } else {
-    textEnd.innerText = 'Parfait ! Un véritable sans-faute ! ';
+    textEnd.innerText = 'Ton score est de : ' + score + '. Tu peux mieux faire';
+  } else if (score >= 5 && score <= 6) {
+    textEnd.innerText = 'Ton score est de : ' + score + '. Bien joué !';
+  } else if (score > 6 && score < 10) {  // Modifié ici
+    textEnd.innerText = 'Ton score est de : ' + score + '. Quel as !';
+  // } else {
+  //   textEnd.innerText = 'Ton score est de : ' + score + '. Parfait ! Un véritable sans-faute ! ';
     // Jouer la musique de fin
     var end = Date.now() + (15 * 100);
-// go Buckeyes!
+// function confettis
 var colors = ['#BB0000', '#FFFFFF'];
 (function frame() {
   confetti({
@@ -217,6 +243,8 @@ var colors = ['#BB0000', '#FFFFFF'];
 }());
   }
 }
+
+
 //ajouter un evenement pour replay
 replayButton.addEventListener('click', () => {
   // Masquer l'écran du quiz et afficher l'écran de sélection du thème
